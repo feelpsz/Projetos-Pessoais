@@ -6,9 +6,17 @@ pd.options.mode.chained_assignment = None
 
 ## VARIÁVEIS GERAIS
 
+aviso = 'Baixar todas as importações do Brasíndice em https://assinantes.brasindice.com.br/ \n Marcar somente as' \
+        'opções a seguir: \n Código \n Descrição \n PMC \n PFAB \n TISS \n TUSS \n'
+
+exit = 0
+
+print(aviso)
+
 versao = int(input("Qual a versão da Brasíndice será importada? "))
 
-colunas_ordenadas = ['PROFAT', 'CÓD. LAB.', 'LABORATÓRIO', 'CÓD. PROD.', 'PRODUTO', 'CÓD. APRES.', 'PMC INT.', 'PF INT.', 'QTDE. EMB.',
+colunas_ordenadas = ['PROFAT', 'CÓD. LAB.', 'LABORATÓRIO', 'CÓD. PROD.', 'PRODUTO', 'CÓD. APRES.',
+                     'PMC INT.', 'PF INT.', 'QTDE. EMB.',
                       'PMC UNIT.', 'PF UNIT.', 'EDIÇÃO', 'TISS', 'TUSS']
 
 colunas_raw = ["CÓD. LAB.", "LABORATÓRIO", "CÓD. PROD.", "A", "CÓD. APRES.",
@@ -17,7 +25,8 @@ colunas_raw = ["CÓD. LAB.", "LABORATÓRIO", "CÓD. PROD.", "A", "CÓD. APRES.",
 
 ## MEDICAMENTOS
 
-df = pd.read_csv("Medicamentos - TXT D Brasíndice Edição {}.txt".format(versao), names=colunas_raw, encoding='windows-1252')
+df = pd.read_csv("Medicamentos - TXT D Brasíndice Edição {}.txt".format(versao), names=colunas_raw,
+                 encoding='windows-1252')
 
 df['PRODUTO'] = df['A'].map(str)+" "+df['B'].map(str)
 
@@ -37,7 +46,8 @@ df = pd.concat([df, df2], axis = 0)
 
 ## CONVÊNIOS ONCOLÓGICOS
 
-df_co = pd.read_csv("Convênios Oncológicos - TXT D Brasíndice Edição {}.txt".format(versao), names=colunas_raw, encoding='windows-1252')
+df_co = pd.read_csv("Convênios Oncológicos - TXT D Brasíndice Edição {}.txt".format(versao), names=colunas_raw,
+                    encoding='windows-1252')
 
 df_co['PRODUTO'] = df_co['A'].map(str)+' '+df_co['B'].map(str)
 
@@ -57,7 +67,8 @@ df_co = pd.concat([df_co, df_co2], axis = 0)
 
 ## SOLUÇÕES PARENTERAIS
 
-df_sp = pd.read_csv('Soluções Parenterais - TXT D Brasíndice Edição {}.txt'.format(versao), names=colunas_raw, encoding='windows-1252')
+df_sp = pd.read_csv('Soluções Parenterais - TXT D Brasíndice Edição {}.txt'.format(versao), names=colunas_raw,
+                    encoding='windows-1252')
 
 df_sp['PRODUTO'] = df_sp['A'].map(str)+' '+df_sp['B'].map(str)
 
@@ -77,7 +88,8 @@ df_sp = pd.concat([df_sp, df_sp2], axis = 0 )
 
 ## MATERIAIS, DIETAS E OUTROS
 
-df_mdo = pd.read_csv('Materiais Dietas e Outros - TXT D Brasíndice Edição {}.txt'.format(versao), names=colunas_raw, encoding='windows-1252')
+df_mdo = pd.read_csv('Materiais Dietas e Outros - TXT D Brasíndice Edição {}.txt'.format(versao), names=colunas_raw,
+                     encoding='windows-1252')
 
 df_mdo['PRODUTO'] = df_mdo['A'].map(str)+' '+df_mdo['B'].map(str)
 
@@ -97,7 +109,8 @@ df_mdo = pd.concat([df_mdo, df_mdo2], axis = 0)
 
 ## DIETAS E NUTRIÇÃO
 
-df_dn = pd.read_csv('Dietas e Nutrição - TXT D Brasíndice Edição {}.txt'.format(versao), names=colunas_raw, encoding='windows-1252')
+df_dn = pd.read_csv('Dietas e Nutrição - TXT D Brasíndice Edição {}.txt'.format(versao), names=colunas_raw,
+                    encoding='windows-1252')
 
 df_dn['PRODUTO'] = df_dn['A'].map(str)+' '+df_dn['B'].map(str)
 
@@ -117,7 +130,8 @@ df_dn = pd.concat([df_dn, df_dn2], axis = 0)
 
 ## OUTROS FÁRMACOS
 
-df_of = pd.read_csv('Outros Fármacos - TXT D Brasíndice Edição {}.txt'.format(versao), names=colunas_raw, encoding='windows-1252')
+df_of = pd.read_csv('Outros Fármacos - TXT D Brasíndice Edição {}.txt'.format(versao), names=colunas_raw,
+                    encoding='windows-1252')
 
 df_of['PRODUTO'] = df_of['A'].map(str)+' '+df_of['B'].map(str)
 
@@ -137,7 +151,8 @@ df_of = pd.concat([df_of, df_of2], axis = 0)
 
 ## MATERIAIS E INSUMOS
 
-df_mi = pd.read_csv('Materiais e Insumos - TXT D Brasíndice Edição {}.txt'.format(versao), names=colunas_raw, encoding='windows-1252')
+df_mi = pd.read_csv('Materiais e Insumos - TXT D Brasíndice Edição {}.txt'.format(versao), names=colunas_raw,
+                    encoding='windows-1252')
 
 df_mi['PRODUTO'] = df_mi['A'].map(str)+' '+df_mi['B'].map(str)
 
@@ -171,4 +186,7 @@ nome = "Base de Cadastros - Edição {}.xlsx".format(versao)
 
 df_bd.to_excel(nome)
 
-print("A Base de Cadastros da Edição {} foi gerada com sucesso!".format(versao))
+print("A Base de Cadastros da Edição {} foi gerada com sucesso! \n".format(versao))
+
+while exit == 0:
+    exit = int(input("Pressione 1 e Enter para terminar o programa!\n"))
